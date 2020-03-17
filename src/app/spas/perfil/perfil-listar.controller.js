@@ -11,38 +11,29 @@ function PerfilListarController($rootScope, $scope, $location,
     vm.contador = 0;
 
     vm.url = "http://localhost:8080/treinamento/api/perfils/";
-    vm.urlPessoa = "http://localhost:8080/treinamento/api/pessoas/";
 
     vm.init = function () {
         HackatonStefaniniService.listar(vm.url).then(
             function (responsePerfil) {
-                if (responsePerfil.data !== undefined) {
+                if (responsePerfil.data !== undefined) 
                     vm.listarPerfis = responsePerfil.data;
 
-                    vm.listaPerfilMostar = [];
-                    var max = vm.listarPerfis.length > vm.qdePorPagina ? vm.qdePorPagina : vm.listarPerfis.length;
+                vm.listaPerfilMostrar = [];
+                var max = vm.listarPerfis.length > vm.qdePorPagina ? vm.qdePorPagina : vm.listarPerfis.length;
 
-                    vm.qdePorPagina = new Array(vm.listarPerfis.length % vm.qdePorPagina === 0 ? vm.listarPerfis.length / vm.qdePorPagina : parseInt(vm.listarPerfis.length / vm.qdePorPagina) + 1);
-                    vm.currentPage = 1;
-                    for (var count = 0; count < max; count++) {
-                        vm.listaPerfilMostar.push(vm.listarPerfis[count]);
-                        vm.ultimoIndex++;
-                    }
-
-                    vm.listaPerfilMostar.sort(function (a, b) {
-                        return a.id - b.id;
-                    });
-
-                    HackatonStefaniniService.listar(vm.urlPessoa).then(
-                        function (responsePessoa) {
-                            if (responsePessoa.data !== undefined)
-                                vm.listarPessoa = responsePessoa.data;
-                        }
-                    )
+                vm.qdePaginacao = new Array(vm.listarPerfis.length % vm.qdePorPagina === 0 ? vm.listarPerfis.length / vm.qdePorPagina : parseInt(vm.listarPerfis.length / vm.qdePorPagina) + 1);
+                vm.currentPage = 1;
+                for (var count = 0; count < max; count++) {
+                    vm.listaPerfilMostrar.push(vm.listarPerfis[count]);
+                    vm.ultimoIndex++;
                 }
+
+                vm.listaPerfilMostrar.sort(function (a, b) {
+                    return a.id - b.id;
+                });
             }
-        )
-    }
+        );
+    };
 
     vm.atualizarPaginanacao = function (index) {
 
@@ -53,21 +44,21 @@ function PerfilListarController($rootScope, $scope, $location,
     };
 
     vm.avancarPaginanacao = function (index) {
-        vm.listaPerfilMostar = [];
+        vm.listaPerfilMostrar = [];
         vm.currentPage++;
 
         var idx = angular.copy(vm.ultimoIndex);
         var cont = vm.listarPerfis.length - vm.qdePorPagina;
         for (var count = cont > vm.qdePorPagina ? vm.qdePorPagina : cont; count > 0; count--) {
-            vm.listaPerfilMostar.push(vm.listarPerfis[idx++]);
+            vm.listaPerfilMostrar.push(vm.listarPerfis[idx++]);
             vm.ultimoIndex++;
             vm.contador++;
         }
 
-        vm.listaPerfilMostar.sort(function (a, b) {
+        vm.listaPerfilMostrar.sort(function (a, b) {
             return a.id - b.id;
         });
-    }
+    };
 
     vm.retrocederPaginanacao = function (index) {
         
@@ -80,7 +71,7 @@ function PerfilListarController($rootScope, $scope, $location,
             vm.listaPerfilMostrar.push(vm.listarPerfis[idx--]);
             vm.contador--;
         }
-        vm.listaPessoasMostrar.sort(function (a, b) {
+        vm.listaPerfilMostrar.sort(function (a, b) {
             return a.id - b.id;
         });
     };
