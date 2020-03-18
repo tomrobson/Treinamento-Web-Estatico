@@ -22,6 +22,7 @@ module.exports = function (config) {
             'src/app/stefanini/*.js',
             'src/**/*.module.js',
             'src/**/*.route.js',
+            'src/**/*.utils.js',
             'src/**/*.service.js',
             'src/**/*.controller.js',
             'src/**/*.html',
@@ -84,7 +85,7 @@ customLaunchers: {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true,
+        singleRun: false,
 
         // Concurrency level
         // how many browser should be started simultaneous

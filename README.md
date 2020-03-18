@@ -40,3 +40,13 @@ CONFIG CORS BACKEND
 	<response-header name="Access-Control-Max-Age" header-name="Access-Control-Max-Age" header-value="1"/>
 </filters>
 
+
+-------------------------------------------- Vídeo Aulas para Implementar as Classes de teste -----------------------------------------------------------------
+Parte 1
+https://www.youtube.com/watch?v=usCm0XZ0rAs
+
+Parte 2
+https://www.youtube.com/watch?v=ZpbzXFuLlUc
+
+Parte 3
+https://www.youtube.com/watch?v=hUpyhV1mYnI
