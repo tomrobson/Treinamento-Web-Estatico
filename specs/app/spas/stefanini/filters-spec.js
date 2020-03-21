@@ -1,7 +1,7 @@
 describe('Filtros', function() {
 
     // Carrega os filtros do arh
-    beforeEach(module('stefanini.filters'));
+    beforeEach(angular.mock.module('stefanini.filters'));
 
     var $filter;
 
@@ -21,6 +21,32 @@ describe('Filtros', function() {
 
             // Assert
             expect(matricula).toBe(429676);
+        });
+
+    });
+
+    describe('Converter Float', function () {
+
+        it('retorna 1456.12 quando informa 1456,12', function () {
+            var converterFloat = $filter('converterFloat');
+            var chave = '1456,12';
+
+            var chaveFloat = converterFloat(chave);
+
+            expect(chaveFloat).toBe(1456.12);
+        });
+        
+    });
+
+    describe('Converte Inteiro para Float', function () {
+
+        it('retorna 455.00 quando informa 455', function () {
+            var converterInteiro = $filter('converterInteiroParaFloat');
+            var chave = '455';
+
+            var chaveInt = converterInteiro(chave);
+
+            expect(chaveInt).toBe(455.00);
         });
 
     });
@@ -119,12 +145,15 @@ describe('Filtros', function() {
             // Arrange
             var capitalizeFirstWord = $filter('capitalizeFirstWord');
             var texto = 'inicio de UMA Frase';
+            var texto2;
 
             // Act
             var textoFormatado = capitalizeFirstWord(texto);
+            var textoFormatado2 = capitalizeFirstWord(texto2);
 
             // Assert
             expect(textoFormatado).toBe('Inicio de uma frase');
+            expect(textoFormatado2).toBe('');
         });
 
     });
@@ -135,12 +164,15 @@ describe('Filtros', function() {
             // Arrange
             var capitalizeEachWord = $filter('capitalizeEachWord');
             var texto = 'alex MONTEIRO bArboZa';
+            var texto2;
 
             // Act
             var textoFormatado = capitalizeEachWord(texto);
+            var textoFormatado2 = capitalizeEachWord(texto2);
 
             // Assert
             expect(textoFormatado).toBe('Alex Monteiro Barboza');
+            expect(textoFormatado2).toBe('');
         });
 
         it('retorna "À Noite, Vovô Kowalsky Vê O Ímã Cair No Pé Do Pinguim Queixoso E Vovó Põe Açúcar No Chá De Tâmaras Do Jabuti Feliz." quando informado "À noite, vovô Kowalsky vê o ímã cair no pé do pinguim queixoso e vovó põe açúcar no chá de tâmaras do jabuti feliz."', function() {

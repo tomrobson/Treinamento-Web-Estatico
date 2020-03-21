@@ -1,11 +1,12 @@
 describe('HomeController', function(){
     var PessoaTeste;
-    var $location, HackatonStefaniniService;
+    var $location, HackatonStefaniniService, $scope;
 
     beforeEach(angular.mock.module('hackaton-stefanini'));
 
-    beforeEach(inject(function(_$location_, _HackatonStefaniniService_,_$controller_, _$httpBackend_){
-        $controller = _$controller_;
+    beforeEach(inject(function(_$rootScope_, _$location_, _HackatonStefaniniService_,_$controller_, _$httpBackend_){
+        $scope = _$rootScope_.$new();
+        $controller = _$controller_('HomeController', {$scope: $scope});
         $location = _$location_;
         HackatonStefaniniService = _HackatonStefaniniService_;
         $httpBackend = _$httpBackend_;
@@ -16,5 +17,11 @@ describe('HomeController', function(){
         $httpBackend.verifyNoOutstandingRequest();
     });
 
+    it('Serviço HomeController exite?', function () {
+        expect($controller).toBeDefined();
+    });
 
+    it('Testando metodo retornarConsultaModelo', function () {
+        //expect($controller.executaConsultaModelo).toEqual('');
+    });
 })
