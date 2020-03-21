@@ -17,8 +17,10 @@ module.exports = function (config) {
             // Para permitir a execução dos testes em ambiente de integração contínua, é necessário incluir os as bibliotecas JavaScript
             // necessárias para a execução da aplicação neste ponto
             { pattern: 'node_modules/angular/angular.js', watched: false},
+            { pattern: 'node_modules/ng-table/bundles/ng-table.js', watched: false},
+            { pattern: 'node_modules/angular-route/angular-route.js', watched: false},
             { pattern: 'node_modules/angular-mocks/angular-mocks.js', watched: false},
-            { pattern: 'https://desenv.estatico.bb.com.br/gaw-commons/libs/angular-sanitize/1.5.9/angular-sanitize.min.js', watched: false},
+            { pattern: 'node_modules/angular-sanitize/angular-sanitize.js', watched: false},
             'src/app/stefanini/*.js',
             'src/**/*.module.js',
             'src/**/*.route.js',

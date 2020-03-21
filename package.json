@@ -6,9 +6,9 @@
         "test": "karma start karma.conf.js"
     },
     "devDependencies": {
-        "angular": "~1.7.9",
+        "angular": "^1.7.9",
         "angular-animate": "~1.5.8",
-        "angular-mocks": "~1.6.0",
+        "angular-mocks": "^1.6.10",
         "angular-route": "~1.5.8",
         "angular-typeahead": "^1.0.2",
         "bootstrap": "^3.4.1",
@@ -23,11 +23,11 @@
         "grunt-htmllint": "^0.2.7",
         "grunt-karma": "^2.0.0",
         "grunt-strip-code": "^1.0.4",
-        "jasmine-core": "^2.5.2",
-        "karma": "^1.3.0",
+        "jasmine-core": "^2.99.1",
+        "karma": "^1.7.1",
         "karma-chrome-launcher": "^2.2.0",
         "karma-coverage": "^1.1.2",
-        "karma-jasmine": "^1.0.2",
+        "karma-jasmine": "^1.1.2",
         "karma-ng-html2js-preprocessor": "^1.0.0",
         "karma-phantomjs-launcher": "^1.0.2"
     },
@@ -39,8 +39,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "angular-sanitize": "^1.7.9",
         "chrome-launcher": "^0.10.5",
         "grunt-cli": "^1.3.2",
-        "karma": "^1.7.1"
+        "ng-table": "^3.0.1"
     }
 }
