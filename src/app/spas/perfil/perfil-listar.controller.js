@@ -84,7 +84,10 @@ function PerfilListarController($rootScope, $scope, $location,
     }
 
     vm.remover = function (id) {
-        var liberaExclusao = true;
+        if(id == undefined)
+            liberaExclusao = false;
+        else
+            var liberaExclusao = true;
 
         angular.forEach(vm.listarPerfis, function (value, key) {
             if (value.id === id)

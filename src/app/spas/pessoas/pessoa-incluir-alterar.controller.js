@@ -24,9 +24,9 @@ function PessoaIncluirAlterarController(
         id: null,
         nome: "",
         email: "",
-        dataNascimento: null,
-        enderecos: [],
-        perfils: [],
+        dataNascimento: "",
+        enderecos: [null],
+        perfils: [null],
         situacao: false
     };
     vm.enderecoDefault = {
@@ -102,20 +102,27 @@ function PessoaIncluirAlterarController(
         vm.endereco = undefined;
     };
 
-    vm.incluir = function () {
+    vm.incluir = function (obj, acao) {
+        if (obj !== undefined && acao !== undefined) {
+            vm.pessoa = obj;
+            vm.pessoa.dataNascimento = obj.dataNascimento;
+            vm.acao = acao;
+        }
+
         vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
 
         var objetoDados = angular.copy(vm.pessoa);
         var listaEndereco = [];
+        
         angular.forEach(objetoDados.enderecos, function (value, key) {
-            if (value.complemento.length > 0) {
+            if (value.complemento.length > 0 && value.complemento !== null) {
                 value.idPessoa = objetoDados.id;
                 listaEndereco.push(angular.copy(value));
             }
         });
 
         objetoDados.enderecos = listaEndereco;
-        if (vm.perfil !== null){
+        if (vm.perfil !== undefined){
 
             vm.isNovoPerfil = true;
             
@@ -128,7 +135,6 @@ function PessoaIncluirAlterarController(
                 objetoDados.perfils.push(vm.perfil);
         }
         if (vm.acao == "Cadastrar") {
-
             vm.salvar(vm.urlPessoa, objetoDados).then(
                 function (pessoaRetorno) {
                     vm.retornarTelaListagem();
@@ -225,8 +231,8 @@ function PessoaIncluirAlterarController(
     /**METODOS AUXILIARES */
     vm.formataDataJava = function (data) {
         var dia = data.slice(0, 2);
-        var mes = data.slice(2, 4);
-        var ano = data.slice(4, 8);
+        var mes = data.slice(3, 5);
+        var ano = data.slice(6, 10);
 
         return ano + "-" + mes + "-" + dia;
     };
@@ -236,7 +242,7 @@ function PessoaIncluirAlterarController(
         var mes = data.slice(5, 7);
         var dia = data.slice(8, 10);
 
-        return dia + mes + ano;
+        return dia + "-" + mes + "-" + ano;
     };
 
     vm.listaUF = [

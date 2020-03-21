@@ -32,13 +32,6 @@ function PessoaListarController($rootScope, $scope, $location,
                 vm.listaPessoasMostrar.sort(function (a, b) {
                     return a.id - b.id;
                 });
-
-                HackatonStefaniniService.listar(vm.urlEndereco).then(
-                    function (responseEndereco) {
-                        if (responseEndereco.data !== undefined)
-                            vm.listaEndereco = responseEndereco.data;
-                    }
-                );
             }
         );
     };
@@ -114,5 +107,4 @@ function PessoaListarController($rootScope, $scope, $location,
     vm.retornarTelaListagem = function () {
         $location.path("listarPessoas");
     }
-
 }

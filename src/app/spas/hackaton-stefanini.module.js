@@ -3,7 +3,7 @@
 
     angular.module("hackaton-stefanini", [
         "ngRoute",
-       // "stefanini.filters",
+        "stefanini.filters",
         "ui.mask",
         "ngTable",
         // ATENÇÃO: ao adicionar uma biblioteca aqui, adicionar uma referência no arquivo karma.conf.js para realizar os testes automatizados
