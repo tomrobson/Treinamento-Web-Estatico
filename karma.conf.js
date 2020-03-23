@@ -20,7 +20,6 @@ module.exports = function (config) {
             { pattern: 'node_modules/ng-table/bundles/ng-table.js', watched: false},
             { pattern: 'node_modules/angular-route/angular-route.js', watched: false},
             { pattern: 'node_modules/angular-mocks/angular-mocks.js', watched: false},
-            { pattern: 'node_modules/angular-sanitize/angular-sanitize.js', watched: false},
             'src/app/stefanini/*.js',
             'src/**/*.module.js',
             'src/**/*.route.js',

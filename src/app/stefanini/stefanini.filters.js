@@ -104,7 +104,7 @@
         };
     };
 
-    angular.module('stefanini.filters', ['ngSanitize'])
+    angular.module('stefanini.filters', [])
         .filter('converterMatricula', converterMatricula)
         .filter('formatarChave', formatarChave)
         .filter('lpad', lpad)
