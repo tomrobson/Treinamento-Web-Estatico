@@ -56,7 +56,7 @@ function PessoaIncluirAlterarController(
         vm.listar(vm.urlPerfil).then(
             function (response) {
                 if (response !== undefined) {
-                    vm.listaPerfil = response;
+                    vm.listaPerfils = response;
                     if (vm.idPessoa) {
                         vm.tituloTela = "Editar Pessoa";
                         vm.acao = "Editar";
@@ -66,7 +66,7 @@ function PessoaIncluirAlterarController(
                                 if (pessoaRetorno !== undefined) {
                                     vm.pessoa = pessoaRetorno;
                                     vm.pessoa.dataNascimento = vm.formataDataTela(pessoaRetorno.dataNascimento);
-                                    vm.perfil = vm.pessoa.perfils[0];
+                                    vm.perfils = vm.pessoa.perfils[0];
                                 }
                             }
                         );
@@ -102,49 +102,57 @@ function PessoaIncluirAlterarController(
         vm.endereco = undefined;
     };
 
-    vm.incluir = function (obj, acao) {
-        if (obj !== undefined && acao !== undefined) {
+    vm.incluir = function (obj) {
+        if(obj !== undefined) {
+            vm.acao = obj.acao;
             vm.pessoa = obj;
-            vm.pessoa.dataNascimento = obj.dataNascimento;
-            vm.acao = acao;
+            vm.perfils = obj.perfils;
+        }else{
+            vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
         }
-
-        vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
-
+        
         var objetoDados = angular.copy(vm.pessoa);
         var listaEndereco = [];
         
         angular.forEach(objetoDados.enderecos, function (value, key) {
-            if (value.complemento.length > 0 && value.complemento !== null) {
+            if (value.complemento.length > 0) {
                 value.idPessoa = objetoDados.id;
                 listaEndereco.push(angular.copy(value));
             }
         });
 
         objetoDados.enderecos = listaEndereco;
-        if (vm.perfil !== undefined){
+        if (vm.perfils !== undefined){
 
             vm.isNovoPerfil = true;
             
             angular.forEach(objetoDados.perfils, function (value, key) {
-                if (value.id === vm.perfil.id) {
+                if (value.id === vm.perfils.id) {
                     vm.isNovoPerfil = false;
                 }
             });
             if (vm.isNovoPerfil)
-                objetoDados.perfils.push(vm.perfil);
+                objetoDados.perfils.push(vm.perfils);
         }
+        var deferred = $q.defer();
         if (vm.acao == "Cadastrar") {
             vm.salvar(vm.urlPessoa, objetoDados).then(
                 function (pessoaRetorno) {
-                    vm.retornarTelaListagem();
+                    if (pessoaRetorno !== undefined){
+                        deferred.resolve(pessoaRetorno);
+                        vm.retornarTelaListagem();
+                    }
                 });
         } else if (vm.acao == "Editar") {
             vm.alterar(vm.urlPessoa, objetoDados).then(
                 function (pessoaRetorno) {
-                    vm.retornarTelaListagem();
+                    if (pessoaRetorno !== undefined){
+                        deferred.resolve(pessoaRetorno);
+                        vm.retornarTelaListagem();
+                    }
                 });
         }
+        return deferred.promise;
     };
 
     vm.remover = function (objeto, tipo) {
@@ -153,10 +161,15 @@ function PessoaIncluirAlterarController(
         if (tipo === "ENDERECO")
             url = vm.urlEndereco + objeto.id;
 
+        var deferred = $q.defer();
         vm.excluir(url).then(
             function (ojetoRetorno) {
-                vm.retornarTelaListagem();
+                if(ojetoRetorno !== undefined){
+                    deferred.resolve(ojetoRetorno);
+                    vm.retornarTelaListagem();
+                }
             });
+        return deferred.promise;
     };
 
     /**METODOS DE SERVICO */
@@ -230,19 +243,21 @@ function PessoaIncluirAlterarController(
 
     /**METODOS AUXILIARES */
     vm.formataDataJava = function (data) {
+        var data = data;
         var dia = data.slice(0, 2);
         var mes = data.slice(3, 5);
         var ano = data.slice(6, 10);
 
-        return ano + "-" + mes + "-" + dia;
+        return ano + '-' + mes + '-' + dia;
     };
 
     vm.formataDataTela = function (data) {
+        var data = data;
         var ano = data.slice(0, 4);
         var mes = data.slice(5, 7);
         var dia = data.slice(8, 10);
 
-        return dia + "-" + mes + "-" + ano;
+        return dia + "/" + mes + "/" + ano;
     };
 
     vm.listaUF = [
