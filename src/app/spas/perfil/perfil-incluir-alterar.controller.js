@@ -76,13 +76,20 @@ function PerfilIncluirAlterarController(
         $location.path("listarPerfis");
     };
 
-    vm.incluir = function() {
+    vm.incluir = function(obj) {
+        if (obj !== undefined){
+            vm.acao = obj.acao;
+            vm.perfil = obj;
+        }
+        var deferred = $q.defer();
+
         if (vm.acao == "Cadastrar") {
             vm.perfil.dataHoraInclusao = vm.criarData();
 
             var objetoDados = angular.copy(vm.perfil);
             vm.salvar(vm.url, objetoDados).then(
                 function (perfilRetorno) {
+                    deferred.resolve(perfilRetorno);
                     vm.retornarTelaListagem();
                 });
         } else if (vm.acao == "Editar") {
@@ -92,18 +99,23 @@ function PerfilIncluirAlterarController(
             var objetoDados = angular.copy(vm.perfil);
             vm.alterar(vm.url, objetoDados).then(
                 function (perfilRetorno) {
+                    deferred.resolve(perfilRetorno);
                     vm.retornarTelaListagem();
                 });
         }
+        return deferred.promise;
     };
 
     vm.remover = function (objeto) {
         var urlPerfil = vm.url + objeto.id;
+        var deferred = $q.defer();
         
         vm.excluir(urlPerfil).then(
             function (objetoRetorno) {
+                deferred.resolve(objetoRetorno);
                 vm.retornarTelaListagem();
             });
+        return deferred.promise;
     };
 
     /**Metodos de servico */
@@ -161,7 +173,7 @@ function PerfilIncluirAlterarController(
         HackatonStefaniniService.excluir(url).then(
             function (response) {
                 if (response.status == 200)
-                    deferred.resolve(response.deta);
+                    deferred.resolve(response.data);
             }
         );
         return deferred.promise;
