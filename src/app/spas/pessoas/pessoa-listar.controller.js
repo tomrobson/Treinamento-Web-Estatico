@@ -87,6 +87,7 @@ function PessoaListarController($rootScope, $scope, $location,
     vm.remover = function (id) {
 
         var liberaExclusao = true;
+        var deferred = $q.defer();
 
         angular.forEach(vm.listaEndereco, function (value, key) {
             if (value.idPessoa === id)
@@ -96,12 +97,16 @@ function PessoaListarController($rootScope, $scope, $location,
         if (liberaExclusao)
             HackatonStefaniniService.excluir(vm.url + id).then(
                 function (response) {
-                    vm.init();
+                    if(response !== undefined){
+                        deferred.resolve(response);
+                        vm.init();
+                    }
                 }
             );
         else {
             alert("Pessoa com Endereço vinculado, exclusão não permitida");
         }
+        return deferred.promise;
     }
 
     vm.retornarTelaListagem = function () {
