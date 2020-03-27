@@ -41,16 +41,4 @@ function MenuController($rootScope, $scope, $location,
         //vm.executaConsultaModelo();
     };
 
-    vm.executaConsultaModelo = function () {
-        var dados = {
-
-        };
-
-        HackatonStefaniniService.teste(dados).then(
-            function (response) {
-                if (response.data !== undefined)
-                    console.log(response.data);
-            }
-        );
-    };
 }
