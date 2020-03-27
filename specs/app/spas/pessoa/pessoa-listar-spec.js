@@ -10,6 +10,16 @@ describe('PessoaListarController', function(){
         perfils: [null],
         situacao: true
     }
+    var enderecos = {
+        id: 1,
+        idPessoa: 1,
+        cep: "12345678",
+        uf: "DF",
+        localidade: "Brasilia",
+        bairro: "Riacho",
+        logradouro: "Rua 25",
+        complemento: "Rua"
+    };
     var obj = {
         id: 1,
         nome: "Teste",
@@ -38,8 +48,69 @@ describe('PessoaListarController', function(){
         ],
         situacao: true,
     }
+    var index = {
+        currentPage: 1,
+        ultimoIndex: 0,
+        listaPessoas: [
+            {
+                id: 1,
+                nome: "JOAO",
+                email: "joao.teste@gmail.com",
+                dataNascimento: "25-08-1995",
+                enderecos: [null],
+                perfils: [null],
+                situacao: true
+            },
+            {
+                id: 2,
+                nome: "JOAO",
+                email: "joao.teste@gmail.com",
+                dataNascimento: "25-08-1995",
+                enderecos: [null],
+                perfils: [null],
+                situacao: true
+            },
+            {
+                id: 3,
+                nome: "JOAO",
+                email: "joao.teste@gmail.com",
+                dataNascimento: "25-08-1995",
+                enderecos: [null],
+                perfils: [null],
+                situacao: true
+            },
+            {
+                id: 4,
+                nome: "JOAO",
+                email: "joao.teste@gmail.com",
+                dataNascimento: "25-08-1995",
+                enderecos: [null],
+                perfils: [null],
+                situacao: true
+            },
+            {
+                id: 5,
+                nome: "JOAO",
+                email: "joao.teste@gmail.com",
+                dataNascimento: "25-08-1995",
+                enderecos: [null],
+                perfils: [null],
+                situacao: true
+            },
+            {
+                id: 6,
+                nome: "JOAO",
+                email: "joao.teste@gmail.com",
+                dataNascimento: "25-08-1995",
+                enderecos: [null],
+                perfils: [null],
+                situacao: true
+            }
+        ]
+    };
 
     var url = "http://localhost:8080/treinamento/api/pessoas/";
+    var urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
 
     beforeEach(angular.mock.module('hackaton-stefanini'));
 
@@ -71,20 +142,40 @@ describe('PessoaListarController', function(){
         });
         
         it('Testando metodo init', function () {
-            //resultado = {};
-            //$httpBackend.whenGET(url).respond(200, $q.when(obj));
+            resultado = {};
+            $httpBackend.whenGET(url).respond(200, $q.when(obj));
 
-            //expect($controller.init).not.toHaveBeenCalled();
-            //expect(resultado).toEqual({});
+            expect($controller.init).not.toHaveBeenCalled();
+            expect(resultado).toEqual({});
 
-            //$controller.init(url).then(function (res) {
-            //    resultado = res;
-            //});
+            $controller.init().then(function (res) {
+                resultado = res;
+            });
 
-            //$httpBackend.flush();
+            $httpBackend.flush();
 
-            //expect($controller.init).toHaveBeenCalledWith(url);
-            //expect(resultado).toEqual(obj);
+            expect($controller.init).toHaveBeenCalledWith();
+            expect(resultado).toEqual(obj);
+        });
+
+        it('Testando metodo avancarPaginanacao', function () {
+            resultado = {};
+
+            $controller.avancarPaginanacao(index).then(function (resultado) {
+                expect(resultado.currentPage).toEqual(2);
+                expect(resultado.ultimoIndex).toEqual(1);
+            });
+        });
+
+        it('Testando metodo retrocederPaginanacao', function () {
+            resultado = {};
+            index.currentPage = 2;
+            index.ultimoIndex = 1;
+
+            $controller.retrocederPaginanacao(index).then(function (resultado) {
+                expect(resultado.currentPage).toEqual(1);
+                expect(resultado.ultimoIndex).toEqual(0);
+            });
         });
 
         it('Testando metodo editar retorna para pagina de cadastrar', function () {
@@ -103,20 +194,24 @@ describe('PessoaListarController', function(){
         });
 
         it('Testando metodo remover retorna obj', function () {
-            //resultado = {};
-            //$httpBackend.whenDELETE(url).respond(200, $q.when(pessoa));
+            resultado = {};
+            var id = {
+                id: pessoa.id,
+                acao: ""
+            }
+            $httpBackend.whenDELETE(url + id.id).respond(200, $q.when(pessoa));
 
-            //expect($controller.remover).not.toHaveBeenCalled();
-            //expect(resultado).toEqual({});
+            expect($controller.remover).not.toHaveBeenCalled();
+            expect(resultado).toEqual({});
 
-            //$controller.remover(url + pessoa.id).then(function (res) {
-            //    resultado = res;
-            //});
+            $controller.remover(id).then(function (res) {
+                resultado = res;
+            });
 
-            //$httpBackend.flush();
+            $httpBackend.flush();
 
-            //expect($controller.remover).toHaveBeenCalledWith(url + pessoa.id);
-            //expect(resultado).toEqual(pessoa);
+            expect($controller.remover).toHaveBeenCalledWith(id);
+            expect(resultado).toEqual(pessoa);
         });
 
         it('Testando metodo retornarTelaListagem retorna link listarPessoas', function () {

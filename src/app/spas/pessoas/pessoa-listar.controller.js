@@ -14,15 +14,18 @@ function PessoaListarController($rootScope, $scope, $location,
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
 
     vm.init = function () {
+        var deferred = $q.defer();
         HackatonStefaniniService.listar(vm.url).then(
             function (responsePessoas) {
-                if (responsePessoas.data !== undefined)
+                if (responsePessoas.data !== undefined) {
+                    deferred.resolve(responsePessoas.data);
                     vm.listaPessoas = responsePessoas.data;
+                }
 
                 vm.listaPessoasMostrar = [];
                 var max = vm.listaPessoas.length > vm.qdePorPagina ? vm.qdePorPagina : vm.listaPessoas.length;
 
-                vm.qdePaginacao = new Array(vm.listaPessoas.length % vm.qdePorPagina === 0 ? vm.listaPessoas.length / vm.qdePorPagina : parseInt(vm.listaPessoas.length / vm.qdePorPagina) + 1);
+                vm.qdePaginacao = new ArrayBuffer(vm.listaPessoas.length % vm.qdePorPagina === 0 ? vm.listaPessoas.length / vm.qdePorPagina : parseInt(vm.listaPessoas.length / vm.qdePorPagina) + 1);
                 vm.currentPage = 1;
                 for (var count = 0; count < max; count++) {
                     vm.listaPessoasMostrar.push(vm.listaPessoas[count]);
@@ -34,6 +37,7 @@ function PessoaListarController($rootScope, $scope, $location,
                 });
             }
         );
+        return deferred.promise;
     };
 
     vm.atualizarPaginanacao = function (index) {
@@ -45,6 +49,14 @@ function PessoaListarController($rootScope, $scope, $location,
     };
 
     vm.avancarPaginanacao = function (index) {
+        var index = index;
+        var deferred = $q.defer();
+
+        if (typeof index.currentPage !== undefined) {
+            vm.currentPage = index.currentPage;
+            vm.ultimoIndex = index.ultimoIndex;
+            vm.listaPessoas = index.listaPessoas;
+        }
         
         vm.listaPessoasMostrar = [];
         vm.currentPage++;
@@ -59,9 +71,25 @@ function PessoaListarController($rootScope, $scope, $location,
         vm.listaPessoasMostrar.sort(function (a, b) {
             return a.id - b.id;
         });
+        
+        if (typeof index.currentPage !== undefined) {
+            index.currentPage = vm.currentPage;
+            index.ultimoIndex = vm.ultimoIndex;
+            
+            deferred.resolve(index);
+            return deferred.promise;
+        }
     };
 
     vm.retrocederPaginanacao = function (index) {
+        var index = index;
+        var deferred = $q.defer();
+
+        if (typeof index.currentPage !== undefined) {
+            vm.currentPage = index.currentPage;
+            vm.ultimoIndex = index.ultimoIndex;
+            vm.listaPessoas = index.listaPessoas;
+        }
         
         vm.listaPessoasMostrar = [];
 
@@ -75,6 +103,14 @@ function PessoaListarController($rootScope, $scope, $location,
         vm.listaPessoasMostrar.sort(function (a, b) {
             return a.id - b.id;
         });
+
+        if (typeof index.currentPage !== undefined) {
+            index.currentPage = vm.currentPage;
+            index.ultimoIndex = vm.ultimoIndex;
+            
+            deferred.resolve(index);
+            return deferred.promise;
+        }
     };
 
     vm.editar = function (id) {
@@ -85,9 +121,16 @@ function PessoaListarController($rootScope, $scope, $location,
     }
 
     vm.remover = function (id) {
-
-        var liberaExclusao = true;
+        var liberaExclusao;
         var deferred = $q.defer();
+
+        if (typeof id.id !== 'undefined') {
+            liberaExclusao = true;
+            var acao = id.acao;
+            var id = id.id;
+        } else {
+            liberaExclusao = true;
+        }
 
         angular.forEach(vm.listaEndereco, function (value, key) {
             if (value.idPessoa === id)
@@ -98,8 +141,9 @@ function PessoaListarController($rootScope, $scope, $location,
             HackatonStefaniniService.excluir(vm.url + id).then(
                 function (response) {
                     if(response !== undefined){
-                        deferred.resolve(response);
-                        vm.init();
+                        deferred.resolve(response.data);
+                        if (typeof acao === 'undefined')
+                            vm.init();
                     }
                 }
             );
