@@ -10,7 +10,7 @@ describe('PerfisListarController', function(){
     }
     var index = {
         currentPage: 1,
-        ultimoIndex: 0,
+        ultimoIndex: 2,
         listaPerfil: [
             {
                 id: 1,
@@ -110,14 +110,14 @@ describe('PerfisListarController', function(){
 
             $controller.avancarPaginanacao(index).then(function (resultado) {
                 expect(resultado.currentPage).toEqual(2);
-                expect(resultado.ultimoIndex).toEqual(1);
+                expect(resultado.ultimoIndex).toEqual(3);
             });
         });
 
         it('Testando metodo retrocederPaginanacao', function () {
             resultado = {};
             index.currentPage = 2;
-            index.ultimoIndex = 1;
+            index.ultimoIndex = 2;
 
             $controller.retrocederPaginanacao(index).then(function (resultado) {
                 expect(resultado.currentPage).toEqual(1);

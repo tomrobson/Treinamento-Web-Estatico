@@ -48,10 +48,9 @@ function PerfilListarController($rootScope, $scope, $location,
     };
 
     vm.avancarPaginanacao = function (index) {
-        var index = index;
         var deferred = $q.defer();
 
-        if (typeof index.currentPage !== undefined) {
+        if (typeof index.currentPage !== 'undefined') {
             vm.currentPage = index.currentPage;
             vm.ultimoIndex = index.ultimoIndex;
             vm.listarPerfis = index.listaPerfil;
@@ -72,7 +71,7 @@ function PerfilListarController($rootScope, $scope, $location,
             return a.id - b.id;
         });
 
-        if (typeof index.currentPage !== undefined) {
+        if (typeof index.currentPage !== 'undefined') {
             index.currentPage = vm.currentPage;
             index.ultimoIndex = vm.ultimoIndex;
             
@@ -82,10 +81,9 @@ function PerfilListarController($rootScope, $scope, $location,
     };
 
     vm.retrocederPaginanacao = function (index) {
-        var index = index;
         var deferred = $q.defer();
 
-        if (typeof index.currentPage !== undefined) {
+        if (typeof index.currentPage !== 'undefined') {
             vm.currentPage = index.currentPage;
             vm.ultimoIndex = index.ultimoIndex;
             vm.listarPerfis = index.listaPerfil;
@@ -104,7 +102,7 @@ function PerfilListarController($rootScope, $scope, $location,
             return a.id - b.id;
         });
 
-        if (typeof index.currentPage !== undefined) {
+        if (typeof index.currentPage !== 'undefined') {
             index.currentPage = vm.currentPage;
             index.ultimoIndex = vm.ultimoIndex;
             
