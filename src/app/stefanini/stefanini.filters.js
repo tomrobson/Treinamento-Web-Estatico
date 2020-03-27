@@ -112,6 +112,7 @@
         .filter('capitalizeFirstWord', capitalizeFirstWord)
         .filter('capitalizeEachWord', capitalizeEachWord)
         .filter('converterFloat', converterFloat)
-        .filter('converterInteiroParaFloat', converterInteiroParaFloat);
+        .filter('converterInteiroParaFloat', converterInteiroParaFloat)
+        .filter('formataMCI', formataMCI);
 
 })(angular);

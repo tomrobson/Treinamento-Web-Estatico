@@ -188,4 +188,20 @@ describe('Filtros', function() {
         });
 
     });
+
+    describe('Formatar MCI', function () {
+
+        it('returna vazio', function () {
+            var formataMCI = $filter('formataMCI');
+            var texto = 12345678901;
+            var texto2;
+
+            var resultado = formataMCI(texto);
+            var resultado2 = formataMCI(texto2);
+
+            expect(resultado).toBe('123.456.789-01');
+            expect(resultado2).toBe('');
+        });
+
+    });
 });
