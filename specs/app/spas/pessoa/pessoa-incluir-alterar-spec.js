@@ -162,22 +162,40 @@ describe('PessoaIncluirAlterarController', function(){
             expect(resultado).toEqual(obj);
         });
 
-        it('Testando metodo remover', function () {
-            //resultado = {};
-            //var tipo = "ENDERECO";
-            //$httpBackend.whenDELETE(url).respond(200, $q.when(obj));
+        it('Testando metodo remover sem o tipo ENDERECO', function () {
+            resultado = {};
+            var tipo = "";
+            $httpBackend.whenDELETE(url + pessoa.id).respond(200, $q.when(pessoa));
 
-            //expect($controller.remover).not.toHaveBeenCalled();
-            //expect(resultado).toEqual({});
+            expect($controller.remover).not.toHaveBeenCalled();
+            expect(resultado).toEqual({});
 
-            //$controller.remover(obj, tipo).then(function (res) {
-            //    resultado = res;
-            //});
+            $controller.remover(pessoa, tipo).then(function (res) {
+                resultado = res;
+            });
 
-            //$httpBackend.flush();
+            $httpBackend.flush();
 
-            //expect($controller.remover).toHaveBeenCalledWith(obj, tipo);
-            //expect(resultado).toEqual(obj);
+            expect($controller.remover).toHaveBeenCalledWith(pessoa, tipo);
+            expect(resultado).toEqual(pessoa);
+        });
+
+        it('Testando metodo remover com tipo ENDERECO', function () {
+            resultado = {};
+            var tipo = "ENDERECO";
+            $httpBackend.whenDELETE(urlEndereco + pessoa.id).respond(200, $q.when(enderecos));
+
+            expect($controller.remover).not.toHaveBeenCalled();
+            expect(resultado).toEqual({});
+
+            $controller.remover(enderecos, tipo).then(function (res) {
+                resultado = res;
+            });
+
+            $httpBackend.flush();
+
+            expect($controller.remover).toHaveBeenCalledWith(enderecos, tipo);
+            expect(resultado).toEqual(enderecos);
         });
 
         it('Retorna uma objeto por um Id valido', function () {
