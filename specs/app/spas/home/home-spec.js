@@ -1,6 +1,6 @@
 describe('HomeController', function(){
     var PessoaTeste;
-    var $location, HackatonStefaniniService, $scope;
+    var $location, HackatonStefaniniService, $scope, $controller;
 
     beforeEach(angular.mock.module('hackaton-stefanini'));
 
@@ -21,7 +21,4 @@ describe('HomeController', function(){
         expect($controller).toBeDefined();
     });
 
-    it('Testando metodo retornarConsultaModelo', function () {
-        //expect($controller.executaConsultaModelo).toEqual('');
-    });
 })
