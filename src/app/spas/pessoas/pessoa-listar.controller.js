@@ -49,10 +49,9 @@ function PessoaListarController($rootScope, $scope, $location,
     };
 
     vm.avancarPaginanacao = function (index) {
-        var index = index;
         var deferred = $q.defer();
 
-        if (typeof index.currentPage !== undefined) {
+        if (typeof index.currentPage !== 'undefined') {
             vm.currentPage = index.currentPage;
             vm.ultimoIndex = index.ultimoIndex;
             vm.listaPessoas = index.listaPessoas;
@@ -82,10 +81,9 @@ function PessoaListarController($rootScope, $scope, $location,
     };
 
     vm.retrocederPaginanacao = function (index) {
-        var index = index;
         var deferred = $q.defer();
 
-        if (typeof index.currentPage !== undefined) {
+        if (typeof index.currentPage !== 'undefined') {
             vm.currentPage = index.currentPage;
             vm.ultimoIndex = index.ultimoIndex;
             vm.listaPessoas = index.listaPessoas;
