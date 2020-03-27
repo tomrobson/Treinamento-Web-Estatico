@@ -37,24 +37,31 @@
                 <textarea 
                     name="descricao"
                     id="descricaoPerfil" 
+                    class="form-control"
                     cols="50" 
                     rows="4"
                     ng-model="vm.perfil.descricao"
                     placeholder="Digite uma Descrição"></textarea>
             </div>
-            <div class="form-group">
-                <label for="dataHoraInclusao">Data da Criação:</label>
-                <input 
-                    type="text"
-                    id="dataHoraInclusao"
-                    ng-model="vm.perfil.dataHoraInclusao"
-                    disabled>
-                <label for="dataHoraAlteracao">Data da Alteração:</label>
-                <input 
-                    type="text"
-                    id="dataHoraAlteracao"
-                    ng-model="vm.perfil.dataHoraAlteracao"
-                    disabled>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="dataHoraInclusao">Data da Criação:</label>
+                    <input 
+                        type="text"
+                        id="dataHoraInclusao"
+                        class="form-control"
+                        ng-model="vm.perfil.dataHoraInclusao"
+                        disabled>
+                </div>
+                <div class="col-sm-3">
+                    <label for="dataHoraAlteracao">Data da Alteração:</label>
+                    <input 
+                        type="text"
+                        id="dataHoraAlteracao"
+                        class="form-control"
+                        ng-model="vm.perfil.dataHoraAlteracao"
+                        disabled>
+                </div>
             </div>
         </form>
     </div>
