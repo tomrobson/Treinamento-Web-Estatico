@@ -331,15 +331,15 @@ describe('PessoaIncluirAlterarController', function(){
             
             var dataTela = $controller.formataDataTela(data);
             
-            expect(dataTela).toBe("25/08/1995");
+            expect(dataTela).toEqual("25081995");
         });
 
         it('Formatar data para Java', function () {
-            var data = "25/08/1995";
+            var data = "25081995";
 
             var dataJava = $controller.formataDataJava(data);
 
-            expect(dataJava).toBe("1995-08-25");
+            expect(dataJava).toEqual("1995-08-25");
         });
 
     });
