@@ -23,7 +23,11 @@
         <h5 class="modal-title">{{vm.tituloTela}}</h5>
       </div>
       <div class="form-group">
-        <img alt="Foto" id="imagemPessoa" src="{{vm.pessoa.imagem}}" style="width:118px; height:140px;">
+        <img alt="Foto" id="imagemPessoa"
+          src="{{vm.pessoa.imagem.split(':')[0] == 'http' ? vm.pessoa.imagem : '../../../app/imagens/default-profile.png'}}"
+          style="width:118px; height:140px;"
+          ng-model="vm.pessoa.imagem"
+          >
         <input type="file"
           id="file"
           onchange="vm.receberImagem()"
@@ -64,7 +68,17 @@
           />
         </div>
         <div class="form-group">
+          <select
+            style="width: 250px; height: 100px; "
+            class="custom-select" multiple
+            ng-class="{'disabledDiv': vm.listaPerfil.length === 0, 'custom-select custom-select-sm': true}"
+            ng-options="item as item.nome for item in vm.listaPerfil track by item.id"
 
+            ng-model="vm.perfils"
+
+          >
+            <option value="">-- Sem Perfil --</option>
+          </select>
         </div>
       </div>
 

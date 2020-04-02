@@ -41,6 +41,9 @@ function PessoaIncluirAlterarController(
         complemento: ""
     };
 
+    vm.trocandoImagem = false;
+    vm.excluisaoImagem = "";
+
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
     vm.urlPerfil = "http://localhost:8080/treinamento/api/perfils/";
     vm.urlPessoa = "http://localhost:8080/treinamento/api/pessoas/";
@@ -69,6 +72,11 @@ function PessoaIncluirAlterarController(
                                     vm.pessoa = pessoaRetorno;
                                     vm.pessoa.dataNascimento = vm.formataDataTela(pessoaRetorno.dataNascimento);
                                     vm.perfils = vm.pessoa.perfils;
+
+                                    var teste = pessoaRetorno.imagem.split(':')[0];
+                                    if (teste == "http") {
+                                        vm.excluisaoImagem = pessoaRetorno.imagem;
+                                    }
                                 }
                             }
                         );
@@ -103,6 +111,7 @@ function PessoaIncluirAlterarController(
 
         if (file) {
             reader.readAsDataURL(file);
+            vm.trocandoImagem = true;
         } else {
             preview.src = "";
         }
@@ -142,7 +151,17 @@ function PessoaIncluirAlterarController(
             alert('teste');
         }else{
             vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
-            vm.pessoa.imagem = document.getElementById("imagemPessoa").getAttribute("src");
+            
+            if (vm.trocandoImagem == true) {
+                vm.pessoa.imagem = document.getElementById("imagemPessoa").getAttribute("src");
+
+                var teste = vm.pessoa.imagem.split(':')[0];
+                
+                if (teste == "data") {
+                    vm.pessoa.imagem = vm.pessoa.imagem.concat(",");
+                    vm.pessoa.imagem = vm.pessoa.imagem.concat(vm.excluisaoImagem);
+                }
+            }
         }
         
         var objetoDados = angular.copy(vm.pessoa);
