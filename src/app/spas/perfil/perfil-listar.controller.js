@@ -24,7 +24,7 @@ function PerfilListarController($rootScope, $scope, $location,
                 vm.listaPerfilMostrar = [];
                 var max = vm.listarPerfis.length > vm.qdePorPagina ? vm.qdePorPagina : vm.listarPerfis.length;
 
-                vm.qdePaginacao = new ArrayBuffer(vm.listarPerfis.length % vm.qdePorPagina === 0 ? vm.listarPerfis.length / vm.qdePorPagina : parseInt(vm.listarPerfis.length / vm.qdePorPagina) + 1);
+                vm.qdePaginacao = new Array(vm.listarPerfis.length % vm.qdePorPagina === 0 ? vm.listarPerfis.length / vm.qdePorPagina : parseInt(vm.listarPerfis.length / vm.qdePorPagina) + 1);
                 vm.currentPage = 1;
                 for (var count = 0; count < max; count++) {
                     vm.listaPerfilMostrar.push(vm.listarPerfis[count]);

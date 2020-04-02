@@ -25,7 +25,7 @@ function PessoaListarController($rootScope, $scope, $location,
                 vm.listaPessoasMostrar = [];
                 var max = vm.listaPessoas.length > vm.qdePorPagina ? vm.qdePorPagina : vm.listaPessoas.length;
 
-                vm.qdePaginacao = new ArrayBuffer(vm.listaPessoas.length % vm.qdePorPagina === 0 ? vm.listaPessoas.length / vm.qdePorPagina : parseInt(vm.listaPessoas.length / vm.qdePorPagina) + 1);
+                vm.qdePaginacao = new Array(vm.listaPessoas.length % vm.qdePorPagina === 0 ? vm.listaPessoas.length / vm.qdePorPagina : parseInt(vm.listaPessoas.length / vm.qdePorPagina) + 1);
                 vm.currentPage = 1;
                 for (var count = 0; count < max; count++) {
                     vm.listaPessoasMostrar.push(vm.listaPessoas[count]);
