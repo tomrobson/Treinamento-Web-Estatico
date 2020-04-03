@@ -91,10 +91,14 @@ function PessoaIncluirAlterarController(
             HackatonStefaniniService.listar(vm.urlEnderecoBuscarPorCEP + vm.enderecoDefault.cep).then(
                 function (response) {
                     if (response !== undefined) {
-                        vm.enderecoDefault.uf = response.data.uf;
-                        vm.enderecoDefault.localidade = response.data.localidade;
-                        vm.enderecoDefault.bairro = response.data.bairro;
-                        vm.enderecoDefault.logradouro = response.data.logradouro;
+                        if (response.data.erro == undefined) {
+                            vm.enderecoDefault.uf = response.data.uf;
+                            vm.enderecoDefault.localidade = response.data.localidade;
+                            vm.enderecoDefault.bairro = response.data.bairro;
+                            vm.enderecoDefault.logradouro = response.data.logradouro;
+                        } else {
+                            alert("CEP Invalito");
+                        }
                     }
                 });
         }
