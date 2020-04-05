@@ -50,7 +50,7 @@
                         type="text"
                         id="dataHoraInclusao"
                         class="form-control"
-                        ng-model="vm.perfil.dataHoraInclusao"
+                        ng-model="vm.perfil.dataHoraInclusao == null ? vm.exibirData(vm.criarData()) : vm.perfil.dataHoraInclusao"
                         disabled>
                 </div>
                 <div class="col-sm-3">

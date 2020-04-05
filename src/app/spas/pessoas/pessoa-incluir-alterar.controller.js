@@ -28,7 +28,7 @@ function PessoaIncluirAlterarController(
         enderecos: [],
         perfils: [],
         situacao: false,
-        imagem: ""
+        imagem: null
     };
     vm.enderecoDefault = {
         id: null,
